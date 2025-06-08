@@ -1,7 +1,7 @@
-cabal-version:  2.4
+cabal-version:  3.0
 
 name:           multi-containers
-version:        0.2
+version:        0.3
 synopsis:       A few multimap variants.
 description:    A library that provides a few multimap variants.
 category:       Data Structures
@@ -13,7 +13,7 @@ copyright:      2019-2021 Ziyang Liu
 license:        BSD-3-Clause
 license-file:   LICENSE
 build-type:     Simple
-tested-with:    GHC==9.6.1, GHC==9.4.5, GHC==9.2.7, GHC==9.0.2, GHC==8.10.7, GHC==8.8.4, GHC==8.6.5
+tested-with:    GHC==9.12.2, GHC==9.6.1, GHC==9.4.5, GHC==9.2.7, GHC==9.0.2, GHC==8.10.7, GHC==8.8.4, GHC==8.6.5
 
 extra-source-files:
     ChangeLog.md
@@ -23,7 +23,14 @@ source-repository head
   type: git
   location: https://github.com/zliu41/multi-containers
 
+common base
+  build-depends:
+      base >=4.7 && <5
+    , containers >=0.5.10.2 && <0.8
+  default-language: Haskell2010
+
 library
+  import: base
   exposed-modules:
       Data.Multimap
       Data.Multimap.Internal
@@ -39,12 +46,9 @@ library
   hs-source-dirs:
       src
   ghc-options: -Wall
-  build-depends:
-      base >=4.7 && <5
-    , containers >=0.5.10.2 && <0.7
-  default-language: Haskell2010
 
 test-suite hspec
+  import: base
   type: exitcode-stdio-1.0
   main-is: Main.hs
   other-modules:
@@ -61,9 +65,6 @@ test-suite hspec
       test/hspec
   ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
-    , containers >=0.5.10.2 && <0.7
-    , hspec >=2.4.8 && <3
+      hspec >=2.4.8 && <3
     , multi-containers
-  default-language: Haskell2010
   build-tool-depends: hspec-discover:hspec-discover == 2.*
